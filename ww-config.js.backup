@@ -7,7 +7,26 @@ export default {
         { name: 'click', label: 'On Click', event: { value: '' }, default: true },
     ],
     properties: {
-showHeader: {
+        content: {
+            label: 'Card Settings',
+            type: 'Object',
+            section: 'settings',
+            bindable: true,
+            defaultValue: {
+                showHeader: true,
+                title: '',
+                description: '',
+                bodyContent: '',
+                showFooter: false,
+                footerContent: '',
+                headerPadding: 'default',
+                contentPadding: 'default',
+                footerPadding: 'default',
+                customClasses: ''
+            },
+            options: {
+                item: {
+                    showHeader: {
                         label: 'Show Header',
                         type: 'OnOff',
                         section: 'settings',
@@ -85,7 +104,9 @@ showHeader: {
                         section: 'style',
                         bindable: true,
                         defaultValue: ''
-    }
+                    }
+                }
+            }
         }
     }
 };

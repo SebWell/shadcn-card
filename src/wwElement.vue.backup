@@ -1,26 +1,26 @@
 <template>
   <div :class="cardClasses">
     <!-- Header Section -->
-    <div v-if="showHeader" :class="headerClasses">
-      <div v-if="title" :class="titleClasses">
-        {{ title }}
+    <div v-if="content.showHeader" :class="headerClasses">
+      <div v-if="content.title" :class="titleClasses">
+        {{ content.title }}
       </div>
-      <div v-if="description" :class="descriptionClasses">
-        {{ description }}
+      <div v-if="content.description" :class="descriptionClasses">
+        {{ content.description }}
       </div>
     </div>
     
     <!-- Content Section -->
     <div :class="contentClasses">
-      <div v-if="bodyContent" v-html="bodyContent"></div>
+      <div v-if="content.bodyContent" v-html="content.bodyContent"></div>
       
       <!-- Dropzone pour insérer d'autres composants Weweb -->
       <div v-if="isEditor" class="ww-dropzone" data-ww-dropzone="content">
-        <!-- Les composants glissés ici seront dans content -->
+        <!-- Les composants glissés ici seront dans content.content -->
       </div>
       <template v-else>
         <component
-          v-for="(item, index) in content"
+          v-for="(item, index) in content.content"
           :key="index"
           :is="item.wwElement"
           v-bind="item"
@@ -31,8 +31,8 @@
     </div>
     
     <!-- Footer Section -->
-    <div v-if="showFooter" :class="footerClasses">
-      <div v-if="footerContent" v-html="footerContent"></div>
+    <div v-if="content.showFooter" :class="footerClasses">
+      <div v-if="content.footerContent" v-html="content.footerContent"></div>
     </div>
   </div>
 </template>
@@ -43,9 +43,24 @@ import { computed } from 'vue'
 export default {
   name: 'WewebCard',
   props: {
-        // Individual props will be auto-generated based on the component type
-        // This is a placeholder that will be manually refined per component
-    },
+    content: {
+      type: Object,
+      required: true,
+      default: () => ({
+        showHeader: true,
+        title: '',
+        description: '',
+        bodyContent: '',
+        showFooter: false,
+        footerContent: '',
+        content: [], // Pour les composants imbriqués
+        customClasses: '',
+        headerPadding: 'default',
+        contentPadding: 'default',
+        footerPadding: 'default'
+      })
+    }
+  },
   setup(props) {
     // Détecter si on est en mode éditeur Weweb
     const isEditor = computed(() => {
@@ -55,15 +70,15 @@ export default {
     const cardClasses = computed(() => {
       const classes = ['card-base']
       
-      if (props.customClasses) {
-        classes.push(props.customClasses)
+      if (props.content.customClasses) {
+        classes.push(props.content.customClasses)
       }
       
       return classes.join(' ')
     })
 
     const headerClasses = computed(() => {
-      return `card-header card-header-${props.headerPadding || 'default'}`
+      return `card-header card-header-${props.content.headerPadding || 'default'}`
     })
 
     const titleClasses = computed(() => {
@@ -75,11 +90,11 @@ export default {
     })
 
     const contentClasses = computed(() => {
-      return `card-content card-content-${props.contentPadding || 'default'}`
+      return `card-content card-content-${props.content.contentPadding || 'default'}`
     })
 
     const footerClasses = computed(() => {
-      return `card-footer card-footer-${props.footerPadding || 'default'}`
+      return `card-footer card-footer-${props.content.footerPadding || 'default'}`
     })
 
     return {
