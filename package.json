@@ -1,26 +1,26 @@
 {
   "name": "shadcn-card",
   "version": "1.0.0",
-  "description": "Shadcn/UI Card component for Weweb",
-  "main": "src/Card.vue",
+  "description": "Shadcn/UI card component for Weweb",
+  "main": "src/card.vue",
+  "weweb": {
+    "componentPath": "./src/card.vue"
+  },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve": "webpack serve --mode development",
+    "build": "webpack --mode production"
   },
   "keywords": [
     "weweb",
     "shadcn",
     "ui",
-    "Card",
+    "card",
     "vue",
     "component"
   ],
-  "author": "Shadcn/UI for Weweb Community",
+  "author": "Shadcn/UI for Weweb",
   "license": "MIT",
   "dependencies": {
     "vue": "^3.3.4"
-  },
-  "devDependencies": {
-    "@vue/cli-service": "^5.0.8"
   }
 }
